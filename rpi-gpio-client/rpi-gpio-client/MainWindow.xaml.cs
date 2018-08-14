@@ -1,4 +1,5 @@
 ﻿using rpi_gpio_api_wrapper;
+using System.ComponentModel;
 using System.Windows;
 
 namespace rpi_gpio_client
@@ -8,15 +9,21 @@ namespace rpi_gpio_client
     /// </summary>
     public partial class MainWindow : Window
     {
+
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new MainWindowViewModel();
         }
 
-        private void CallApiBtn_Click(object sender, RoutedEventArgs e)
+        public MainWindowViewModel GetDataContext()
         {
-            CallApiOutput.Text = "";
-            CallApiOutput.Text += SystemInformation.GetSystemInformation("192.168.1.13", 8000);
+            return (MainWindowViewModel)DataContext;
+        }
+
+        private void DeviceSearch_Click(object sender, RoutedEventArgs e)
+        {
+            GetDataContext().FindDevicesViewModel.DefineDeviceSearchList();
         }
     }
 }

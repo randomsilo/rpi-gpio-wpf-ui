@@ -6,11 +6,58 @@
         xmlns:local="clr-namespace:rpi_gpio_client"
         mc:Ignorable="d"
         Title="RPI GPIO CLIENT" Height="450" Width="800">
-    <Grid>
-        <StackPanel HorizontalAlignment="Left" Height="409" VerticalAlignment="Top" Width="782">
-            <Button x:Name="CallApiBtn" Content="Call Api" ClickMode="Press" Click="CallApiBtn_Click"/>
-            <TextBlock x:Name="CallApiOutput" TextWrapping="Wrap" Height="389"/>
-        </StackPanel>
 
+    <Grid>
+        <DockPanel>
+            <TabControl>
+                <TabItem Header="Find Devices">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="28" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="200" />
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Row="0" Grid.Column="0" Content="IP Address, Start" />
+                        <Label Grid.Row="1" Grid.Column="0" Content="IP Address, End" />
+                        <TextBox Grid.Column="1" Grid.Row="0" Margin="3" Text="{Binding FindDevicesViewModel.IpAddressStart}" />
+                        <TextBox Grid.Column="1" Grid.Row="1" Margin="3" Text="{Binding FindDevicesViewModel.IpAddressEnd}" />
+                        <Button Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right" MinWidth="80" Margin="3" Content="Search" Click="DeviceSearch_Click"  />
+
+                        <ListView Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Margin="3" Name="DeviceSearchList" ItemsSource="{Binding FindDevicesViewModel.DeviceSearchList}">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="IP Address" Width="95" DisplayMemberBinding="{Binding IpAddress}" />
+                                    <GridViewColumn Header="Status" Width="150" DisplayMemberBinding="{Binding DeviceStatus}" />
+                                    <GridViewColumn Header="Info" Width="75">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button Content="Info" Margin="0" VerticalAlignment="Center" />
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Header="Operate" Width="75">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button Content="Operate" Margin="0" VerticalAlignment="Center" />
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </Grid>
+                    
+                </TabItem>
+                <TabItem Header="Device Information">
+                </TabItem>
+                <TabItem Header="Operate Device">
+                </TabItem>
+            </TabControl>
+        </DockPanel>
     </Grid>
 </Window>
